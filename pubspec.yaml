@@ -38,6 +38,10 @@ dependencies:
   biometric_storage: ^5.0.0+4
   flutter_secure_storage: ^9.0.0
   provider: ^6.1.1
+  encrypt: ^5.0.3
+  gap: ^3.0.1
+  mobile_scanner: ^3.5.4
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:

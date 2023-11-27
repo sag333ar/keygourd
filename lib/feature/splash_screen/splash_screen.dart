@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keygourd/core/utilities/app_page_route.dart';
 import 'package:keygourd/feature/authentication/views/pin_sign_in/view/pin_sign_in_view.dart';
 import 'package:keygourd/feature/authentication/views/pin_sign_up/view/pin_sign_up_view.dart';
 import 'package:keygourd/feature/authentication/views/set_bio_metric_view.dart';
@@ -37,9 +38,7 @@ class _SplashViewState extends State<SplashView> {
 
   void _pushToScreen(Widget screen) {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => screen,
-      ),
+      AppPageRoute.defaultPageRoute(screen)
     );
   }
 

@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:keygourd/core/commons/ui.dart';
 import 'package:keygourd/core/commons/widgets/text_button.dart';
+import 'package:keygourd/core/utilities/app_page_route.dart';
+import 'package:keygourd/core/utilities/app_routes.dart';
 import 'package:keygourd/feature/authentication/views/pin_sign_up/controller/pin_sign_up_controller.dart';
 import 'package:keygourd/feature/authentication/widgets/pin_text_field.dart';
 import 'package:keygourd/feature/dashboard/dashboard_view.dart';
@@ -17,6 +21,7 @@ class _PinSignUpViewState extends State<PinSignUpView> {
   final TextEditingController pinController = TextEditingController();
   final TextEditingController confirmPinController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
+  Timer submitOnStoppedTyping = Timer(const Duration(milliseconds: 1), () {});
 
   @override
   void dispose() {
@@ -46,6 +51,15 @@ class _PinSignUpViewState extends State<PinSignUpView> {
                       ),
                       PinTextField(
                         textEditingController: confirmPinController,
+                        onChanged: (value) {
+                          const duration = Duration(milliseconds: 350);
+                          submitOnStoppedTyping.cancel();
+                          submitOnStoppedTyping = Timer(duration, () {
+                            if (value.length == 6) {
+                              _onSubmit();
+                            }
+                          });
+                        },
                         validator: (value) {
                           return controller.confirmPinValidator(
                               pinController.text.trim(),
@@ -56,18 +70,7 @@ class _PinSignUpViewState extends State<PinSignUpView> {
                   )),
               StyledTextButton(
                 text: 'Submit',
-                onPressed: () {
-                  controller.onSubmit(
-                    formKey: formKey,
-                    pin: pinController.text.trim(),
-                    onsuccess: () {
-                      _pushToDashboard(context);
-                    },
-                    onFailure: (errorMessage) {
-                      UI.showMessage(context, message: errorMessage);
-                    },
-                  );
-                },
+                onPressed: _onSubmit,
               )
             ],
           ),
@@ -76,12 +79,27 @@ class _PinSignUpViewState extends State<PinSignUpView> {
     );
   }
 
+  void _onSubmit() {
+    controller.onSubmit(
+      formKey: formKey,
+      pin: pinController.text.trim(),
+      onsuccess: () {
+        _pushToDashboard(context);
+      },
+      onFailure: (errorMessage) {
+        UI.showMessage(context, message: errorMessage);
+      },
+    );
+  }
+
   void _pushToDashboard(BuildContext context) {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(
-        builder: (context) => const DashBoardView(),
-      ),
+      AppPageRoute.defaultPageRoute(
+          DashBoardView(
+            appPin: pinController.text.trim(),
+          ),
+          routeName: AppRoutes.dashboardView),
     );
   }
 }

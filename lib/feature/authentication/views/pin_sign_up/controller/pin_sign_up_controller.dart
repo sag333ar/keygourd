@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:keygourd/core/storage/biometric_storage.dart';
+import 'package:keygourd/core/res/storage/biometric_storage.dart';
 
 class PinSignUpController {
   final BioMetricStorage _bioMetricStorage = BioMetricStorage();

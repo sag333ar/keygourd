@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:keygourd/core/services/api_service.dart';
 import 'package:keygourd/feature/splash_screen/splash_screen.dart';
 
 void main() {
@@ -13,9 +17,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'KeyGourd',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.dark,
       home: const SplashView(),
     );
   }

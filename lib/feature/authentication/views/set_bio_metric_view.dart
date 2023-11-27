@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keygourd/core/commons/widgets/text_button.dart';
+import 'package:keygourd/core/utilities/app_page_route.dart';
 import 'package:keygourd/feature/splash_screen/splash_screen.dart';
 
 class SetBioMetricsView extends StatelessWidget {
@@ -22,8 +23,8 @@ class SetBioMetricsView extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const SplashView(),
+                  AppPageRoute.defaultPageRoute(
+                    const SplashView(),
                   ),
                 );
               },
